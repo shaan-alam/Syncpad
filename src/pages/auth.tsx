@@ -4,7 +4,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import { authOptions } from "@/server/auth";
 import type {
@@ -13,6 +13,7 @@ import type {
 } from "next";
 import { getServerSession } from "next-auth/next";
 import { getProviders, signIn } from "next-auth/react";
+import React from "react";
 
 type AuthLinkProps = {
   icon: string;
@@ -30,21 +31,18 @@ const AuthButton = ({ icon, text, providerId }: AuthLinkProps) => (
     &nbsp; {text}
   </Button>
 );
-const Auth = ({
-  providers,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const authProviders = [
-    {
-      icon: "https://cdn3d.iconscout.com/3d/free/thumb/free-github-2950150-2447911.png",
-      text: "Login with GitHub",
-      providerId: Object.values(providers)[0]?.id,
-    },
-    {
-      icon: "https://cdn3d.iconscout.com/3d/free/thumb/free-discord-9185430-7516828.png?f=webp",
-      text: "Login with Discord",
-      providerId: Object.values(providers)[0]?.id,
-    },
-  ];
+
+const Auth: React.FC<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ providers }) => {
+  const authProviders = Object.values(providers).map((provider) => ({
+    icon:
+      provider.id === "github"
+        ? "https://cdn3d.iconscout.com/3d/free/thumb/free-github-2950150-2447911.png"
+        : "https://cdn3d.iconscout.com/3d/free/thumb/free-discord-9185430-7516828.png?f=webp",
+    text: provider.id === "github" ? "Login with GitHub" : "Login with Discord",
+    providerId: provider.id,
+  }));
 
   return (
     <main className="flex h-screen w-full items-center justify-center">
@@ -58,7 +56,7 @@ const Auth = ({
         </CardHeader>
         <CardContent>
           {authProviders.map((provider) => (
-            <AuthButton {...provider} />
+            <AuthButton key={provider.providerId} {...provider} />
           ))}
         </CardContent>
       </Card>
@@ -67,6 +65,7 @@ const Auth = ({
 };
 
 export default Auth;
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
