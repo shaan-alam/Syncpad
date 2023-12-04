@@ -6,17 +6,25 @@ const Navbar = () => {
   const { data } = useSession();
 
   return (
-    <nav className="w-full border-b p-4">
-      <div className="container mx-auto flex items-center justify-between">
+    <nav className="w-full bg-black py-4">
+      <div className="mx-auto flex items-center justify-between px-24">
         <div className="logo">
-          <h1 className="text-xl font-bold text-primary">SyncPad</h1>
+          <Link href="/">
+            <h1 className="text-xl font-bold text-primary text-white">
+              SyncPad
+            </h1>
+          </Link>
         </div>
         {!data?.user && (
           <Link href="/auth">
             <Button>Login</Button>
           </Link>
         )}
-        {data?.user && <Button onClick={() => signOut()}>Open App</Button>}
+        {data?.user && (
+          <Link href="/">
+            <Button>Open App</Button>
+          </Link>
+        )}
       </div>
     </nav>
   );
