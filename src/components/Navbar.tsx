@@ -21,7 +21,7 @@ const Navbar = () => {
           </Link>
         )}
         {data?.user && (
-          <Link href="/">
+          <Link href="/app">
             <Button>Open App</Button>
           </Link>
         )}
