@@ -22,9 +22,9 @@ import {
   Settings,
   Sun,
   SunMoon,
-  UserRound
+  UserRound,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 
 const AppSidebar = () => {
@@ -35,7 +35,7 @@ const AppSidebar = () => {
     <aside className="bg-priamary h-screen w-[15%] border-r border-r-primary-foreground">
       <div className="p-2">
         <DropdownMenu>
-          <DropdownMenuTrigger className="focus:outline-primary-foreground flex w-full items-center justify-between rounded-md bg-secondary p-2 shadow-sm hover:bg-accent">
+          <DropdownMenuTrigger className="flex w-full items-center justify-between rounded-md bg-secondary p-2 shadow-sm hover:bg-accent focus:outline-primary-foreground">
             <span className="flex items-center">
               <img
                 src={data?.user.image as string}
@@ -96,7 +96,9 @@ const AppSidebar = () => {
               GitHub
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+            >
               <LogOut size={15} className="mr-[14px] text-primary" />
               Sign Out
             </DropdownMenuItem>

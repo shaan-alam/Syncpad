@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/App/Navbar";
 import { Button } from "@/components/ui/button";
 import { api } from "@/utils/api";
 
