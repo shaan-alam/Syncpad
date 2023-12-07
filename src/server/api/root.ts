@@ -1,5 +1,6 @@
 import { workspaceRouter } from "@/server/api/routers/workspace";
 import { createTRPCRouter } from "@/server/api/trpc";
+import { foldersRouter } from "./routers/folders";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { createTRPCRouter } from "@/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   workspace: workspaceRouter,
+  folder: foldersRouter
 });
 
 // export type definition of API
