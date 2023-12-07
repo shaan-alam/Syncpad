@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { authOptions } from "@/server/auth";
+import { db } from "@/server/db";
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
@@ -73,7 +74,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Note: Make sure not to redirect to the same page
   // To avoid an infinite loop!
   if (session) {
-    return { redirect: { destination: "/app" } };
+    const workspace = await db.workspace.findFirst({
+      where: {
+        userId: session.user.id,
+      },
+    });
+    return {
+      redirect: {
+        destination: workspace
+          ? `/workspace/${workspace?.id}`
+          : "/workspace/new",
+      },
+    };
   }
 
   const providers = await getProviders();
