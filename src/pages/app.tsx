@@ -6,7 +6,7 @@ const Workspace = () => {
   const { id } = router.query;
 
   return (
-    <main className="h-screen">
+    <main className="h-screen bg-background">
       <section className="flex p-2">
         <AppSidebar />
         <div className="w-[85%]">
