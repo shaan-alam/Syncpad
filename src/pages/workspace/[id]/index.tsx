@@ -7,7 +7,7 @@ const Workspace = () => {
 
   return (
     <main className="h-screen">
-      <section className="flex">
+      <section className="flex p-2">
         <AppSidebar />
         <div className="w-[85%]">
           <p>

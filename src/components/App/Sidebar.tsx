@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   ChevronsRight,
+  Folders,
   Github,
   Laptop2,
   LogOut,
@@ -26,13 +27,17 @@ import {
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
+import CreateWorkspaceDialog from "../workspace/CreateWorkSpaceDialog";
+import { useState } from "react";
 
 const AppSidebar = () => {
   const { data } = useSession();
   const { theme, setTheme } = useTheme();
 
+  const [workspaceDialogOpen, setWorkspaceDialogOpen] = useState(false);
+
   return (
-    <aside className="bg-priamary h-screen w-[15%] border-r border-r-primary-foreground">
+    <aside className="bg-priamary h-screen w-[15%] border border-accent rounded-md">
       <div className="p-2">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex w-full items-center justify-between rounded-md bg-secondary p-2 shadow-sm hover:bg-accent focus:outline-primary-foreground">
@@ -60,6 +65,10 @@ const AppSidebar = () => {
               <DropdownMenuItem>
                 <Settings size={15} className="mr-[14px] text-primary" />
                 Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setWorkspaceDialogOpen(true)}>
+                <Folders size={15} className="mr-[14px]" />
+                New Workspace
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -105,6 +114,12 @@ const AppSidebar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      {workspaceDialogOpen && (
+        <CreateWorkspaceDialog
+          open={workspaceDialogOpen}
+          setOpen={setWorkspaceDialogOpen}
+        />
+      )}
     </aside>
   );
 };
