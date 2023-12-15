@@ -18,7 +18,13 @@ import { useAtom } from "jotai";
 import { workspaceAtom } from "@/store";
 
 const CreateFolderDialog = ({ children }: PropsWithChildren) => {
-  const { isLoading, mutate } = api.folder.createFolder.useMutation();
+  const utils = api.useUtils();
+
+  const { isLoading, mutate } = api.folder.createFolder.useMutation({
+    onSuccess: () => {
+      utils.folder.invalidate();
+    },
+  });
   const [workspace] = useAtom(workspaceAtom);
 
   const formik = useFormik({
@@ -55,7 +61,7 @@ const CreateFolderDialog = ({ children }: PropsWithChildren) => {
               <Button className="my-4" disabled={!formik.values.name}>
                 Create
                 {!isLoading && <Plus size={16} />}
-                {isLoading && <Loader2 className="ml-2 h-6 w-6 animate-spin" />}
+                {isLoading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
               </Button>
             </form>
           </DialogDescription>
