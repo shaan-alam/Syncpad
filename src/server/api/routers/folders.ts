@@ -29,7 +29,7 @@ export const foldersRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const { workspaceId } = input;
 
-      if (!workspaceId) console.log({ data: "Workspace Id is required" });
+      if (!workspaceId) throw { data: "Workspace Id is required" };
 
       return await ctx.db.folder.findMany({
         where: {
