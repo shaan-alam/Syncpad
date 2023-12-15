@@ -82,9 +82,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     console.log(workspace);
     return {
       redirect: {
-        destination: workspace
-          ? `/workspace/${workspace?.id}`
-          : "/workspace/new",
+        destination: "/app",
       },
     };
   }

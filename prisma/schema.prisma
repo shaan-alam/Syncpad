@@ -15,10 +15,20 @@ datasource db {
 }
 
 model Workspace {
-    id     String @id @default(cuid())
+    id     String   @id @default(cuid())
     name   String
-    user   User   @relation(fields: [userId], references: [id])
+    user   User     @relation(fields: [userId], references: [id])
     userId String
+    Folder Folder[]
+}
+
+model Folder {
+    id          String    @id @default(cuid())
+    name        String
+    user        User      @relation(fields: [userId], references: [id])
+    userId      String
+    workspace   Workspace @relation(fields: [workspaceId], references: [id])
+    workspaceId String
 }
 
 // Necessary for Next auth
@@ -57,6 +67,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     Workspace     Workspace[]
+    Folder        Folder[]
 }
 
 model VerificationToken {
