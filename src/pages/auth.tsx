@@ -79,6 +79,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         userId: session.user.id,
       },
     });
+    console.log(workspace);
     return {
       redirect: {
         destination: "/app",
